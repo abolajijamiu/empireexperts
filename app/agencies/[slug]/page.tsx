@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Globe, Mail, Phone, MapPin, Users, Calendar, ExternalLink, ArrowLeft, Briefcase } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { Project, Service, AgencyCategory } from "@prisma/client";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -28,7 +29,7 @@ export default async function AgencyProfilePage({ params }: Props) {
     include: { categories: true, projects: true, services: true },
   });
 
-  if (!agency) notFound();
+  if (!agency) return notFound();
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -113,7 +114,7 @@ export default async function AgencyProfilePage({ params }: Props) {
               {/* Categories */}
               {agency.categories.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-4">
-                  {agency.categories.map((c: { id: string; name: string }) => (
+                  {agency.categories.map((c: AgencyCategory) => (
                     <Badge key={c.id} variant="secondary">{c.name}</Badge>
                   ))}
                 </div>
@@ -140,7 +141,7 @@ export default async function AgencyProfilePage({ params }: Props) {
                   Portfolio ({agency.projects.length})
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {agency.projects.map((p) => (
+                  {agency.projects.map((p: Project) => (
                     <div key={p.id} className="border border-slate-200 rounded-xl overflow-hidden group">
                       {p.image && (
                         <div className="h-40 overflow-hidden bg-slate-100">
@@ -176,7 +177,7 @@ export default async function AgencyProfilePage({ params }: Props) {
               <div className="bg-white rounded-2xl border border-slate-200 p-6">
                 <h2 className="text-lg font-bold text-slate-900 mb-4" style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}>Services</h2>
                 <div className="space-y-4">
-                  {agency.services.map((s) => (
+                  {agency.services.map((s: Service) => (
                     <div key={s.id} className="border-b border-slate-100 last:border-0 pb-4 last:pb-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
                         <h3 className="font-semibold text-slate-900 text-sm">{s.title}</h3>
