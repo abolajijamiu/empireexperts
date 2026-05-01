@@ -159,7 +159,7 @@ export default async function AgencyProfilePage({ params }: Props) {
                         {p.description && <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>}
                         {p.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1 mt-2">
-                            {p.tags.map((t) => <Badge key={t} variant="secondary" className="text-xs">{t}</Badge>)}
+                            {p.tags.map((t: string) => <Badge key={t} variant="secondary" className="text-xs">{t}</Badge>)}
                           </div>
                         )}
                       </div>
