@@ -113,7 +113,7 @@ export default async function AgencyProfilePage({ params }: Props) {
               {/* Categories */}
               {agency.categories.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-4">
-                  {agency.categories.map((c) => (
+                  {agency.categories.map((c: { id: string; name: string }) => (
                     <Badge key={c.id} variant="secondary">{c.name}</Badge>
                   ))}
                 </div>
